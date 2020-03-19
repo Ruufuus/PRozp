@@ -68,7 +68,6 @@ int main(int argc, char **argv)
     if(size>1)
     MPI_Send( &dummy, 1, MPI_INT, 1, END, MPI_COMM_WORLD); //koniec liczb
     for (i=1;i<size;i++) {
-        printf("%d\n\n\n\n",i);
         MPI_Recv(&(sorted[i*local_tab_size]), local_tab_size , MPI_INT, i, MSG_TAG, MPI_COMM_WORLD, &status);
     }
 
@@ -87,7 +86,7 @@ int main(int argc, char **argv)
         printf("KONIEC\n");
 		MPI_Send(local_tab,local_tab_size,MPI_INT,0,MSG_TAG,MPI_COMM_WORLD);
         int dummy=-1;
-        if(rank<size)
+        if(rank<size-1)
         MPI_Send( &dummy, 1, MPI_INT, rank+1, END, MPI_COMM_WORLD);
 	    } else {
 		send_number(&received_number,local_tab,sizeof(received_number)/sizeof(int),sizeof(local_tab)/sizeof(int),rank,size);
